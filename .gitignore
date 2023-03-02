@@ -129,6 +129,8 @@ dmypy.json
 .pyre/
 
 # Own data
-data/raw/RGB/Sentinel_RGB.tiff
+data/raw/RGB/Sentinel_RGB.tif
+data/raw/mask/Sentinel_RGB.tif
+data/output
 data/raw/S2A_MSIL2A_20220703T084611_N0400_R107_T37VCD_20220703T134122
 data/raw/Sentinel_RGB — backup.tiff
