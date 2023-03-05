@@ -20,6 +20,7 @@ All manipulation you can find in file [processing_before_label.py](/data/process
 3. Next, you need to make annotation. You can use any familiar tool for this, but we used [CVAT](https://www.cvat.ai/) for labeling. After you finish labeling, need to do export in CVAT format.
 
 Our example of labeling.
+
 <a href="/helpers/example_3.png"><img src="/helpers/example_3.png" style="width: 500px; max-width: 100%; height: auto" title="Click for the larger version." /></a>
 
 4. File `annotations.xml` need put to folder `/data/output`. If you have divided the annotation work into several people, you need to assemble everything into a single XML file by yourself (manually). Then run file [processing_after_label.py](/data/processing_after_label.py). In short, this file:
