@@ -28,4 +28,6 @@ Our example of labeling.
 * creating mask via fill all polygons white color for all small pieces (variant of dataset 1)
 * creating one BIG mask for RGBN image (variant of dataset 2)
 
-5. That all. Now you can use you own dataset for training.
+5. That all. Now you can use you own dataset for training, but before you need to split dataset to train & val:
+
+* For **torchgeo** pls see file [torchgeo_split_ds.py](/data/torchgeo_split_ds.py) and run it, if you needed.
