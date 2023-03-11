@@ -66,7 +66,7 @@ def create_imgs_and_mask(
             dtype=np.uint8,
         )
 
-        for i, band in zip(range(1, len(list_of_bands)), list_of_bands):
+        for i, band in zip(range(1, len(list_of_bands) + 1), list_of_bands):
             img.write(band, i)
 
         img.close()

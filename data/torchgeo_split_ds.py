@@ -18,7 +18,7 @@ SCALE = 0.7
 
 
 def train_test_split(
-    input_path: str, output_path: List(str), file_name: str, ratio: float
+    input_path: str, output_path: List[str], file_name: str, ratio: float
 ) -> None:
     """
     Function split Big Sattelite Img or Mask for it to train & val part
