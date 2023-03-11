@@ -1,6 +1,7 @@
 import glob
 import os
 import xml.etree.ElementTree as ET
+from typing import List
 
 import cv2
 import numpy as np
@@ -13,7 +14,19 @@ OUTPUT_PATH = "./data/output/for_classic_way/mask/"
 OUTPUT_FILE = "./data/output/for_torchgeo_way/mask/mask.tif"
 
 
-def rle_decode(input_list, size_of_mask):
+def rle_decode(input_list: List[int], size_of_mask: List[int]) -> np.ndarray:
+    """A function decore rle coding of polygons mask
+    from CVAT format to np.ndarray.
+    Mask - white ccolor, field - black
+
+    Args:
+        input_list: input list for decoding
+        size_of_mask: size of mask
+
+    Returns:
+        decoding np.ndarray
+    """
+
     new_str = ""
     new_size = [size + 1 for size in size_of_mask]
 
@@ -30,21 +43,20 @@ def rle_decode(input_list, size_of_mask):
 
 
 def main():
-    # Reading xml file with coordinates of polygon mask
-    # for each file and generate dict with coord of all masks
-    # Structure of dict
-    # {'name_of_file_N':
-    #   {'polygon_N': '[array_points]'}
-    # } - if polygons exist
-    # {'name_of_file_N': False
-    # } - if polygons not exist
+    """Reading xml file with coordinates of polygon mask
+    for each file and generate dict with coord of all masks
+    Structure of dict
+    {'name_of_file_N': {'polygon_N': '[array_points]'}
+    } - if polygons exist
+    {'name_of_file_N': False} - if polygons not exist
+    """
 
     print("Start reading XML file....")
     tree = ET.parse(LABEL_FILE_NAME)
     root = tree.getroot()
     dict_masks = {}
 
-    # Opening XML file and create dict ----------------------------------------
+    # Opening XML file and create dict ---------------------------------------
     for i in range(2, len(root)):
         # changing name from img_* to mask_* for dict
         correct_name = root[i].attrib["name"]
@@ -63,8 +75,8 @@ def main():
                 elif tag == "mask":
                     # parse data from mask
                     text_coords = root[i][j].attrib["rle"]
-                    # top - stroka, left - colonka
-                    # height - stroka, width - colonka
+                    # top - row, left - column
+                    # height - row, width - column
                     left_top_point = [
                         int(root[i][j].attrib["top"]),
                         int(root[i][j].attrib["left"]),
@@ -86,7 +98,7 @@ def main():
         else:
             dict_masks[correct_name] = False
 
-    # Fill all polygons in templates masks ------------------------------------
+    # Fill all polygons in templates masks -----------------------------------
     print("Start creating masks....")
     for file_name in dict_masks.keys():
         # open file and transform it to array
@@ -136,9 +148,14 @@ def main():
                 height=mask_orig.height,
                 transform=mask_orig.transform,
             ) as dst:
+                # Before we colored polygon with white color for myself
+                # checking,  to see masks in default windows "image viewer".
+                # But for segmentation in torch we need to change 255 to 1.
+                final_mask = np.where(final_mask < 1, final_mask, 1)
                 dst.write(final_mask, indexes=1)
 
-    # Merge all mask files to one big mask ----------------------------------
+    # Merge all mask files to one big mask -----------------------------------
+    # This part runnig long time near 10-15 minutes
     print("Start merge....")
     img_paths = glob.glob(os.path.join(OUTPUT_PATH, "*.tif"))
     img_paths.sort()
