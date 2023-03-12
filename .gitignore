@@ -130,4 +130,5 @@ dmypy.json
 
 # Own data
 data/raw
-data/output
+data/output/for_classic_way
+data/output/for_torchgeo_way
