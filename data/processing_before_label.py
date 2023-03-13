@@ -63,7 +63,7 @@ def create_imgs_and_mask(
             count=len(list_of_bands),
             crs=band_orig.crs,
             transform=band_orig.transform,
-            dtype=np.uint8,
+            dtype=np.uint16,
         )
 
         for i, band in zip(range(1, len(list_of_bands) + 1), list_of_bands):
@@ -126,7 +126,7 @@ def create_imgs_and_mask(
 
     # apply func simple_transformation
     list_bands_rgb = [simple_transformation(band) for band in list_bands_rgb]
-    # list_bands_rgbn = [simple_transformation(band) for band in list_bands_rgbn]
+    list_bands_rgbn = [simple_transformation(band) for band in list_bands_rgbn]
     # mask is black, that way no need to apply func above
     list_bands_mask = [mask]
 
