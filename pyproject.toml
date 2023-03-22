@@ -17,6 +17,16 @@ opencv-python = "^4.7.0.72"
 isort = "^5.12.0"
 black = "^23.1.0"
 torchgeo = "^0.4.0"
+clearml = "^1.9.3"
+segmentation-models-pytorch = "0.2.0"
+torch = {version = "1.13.1", source="torch"}
+torchvision = {version = "0.14.1", source="torch"}
+tensorboard = "^2.12.0"
+
+[[tool.poetry.source]]
+name = "torch"
+url = "https://download.pytorch.org/whl/cu117"
+secondary = true
 
 
 [tool.poetry.group.dev.dependencies]
