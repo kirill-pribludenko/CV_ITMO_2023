@@ -1,23 +1,22 @@
 import gc
 from argparse import ArgumentParser
-from pathlib import Path
 from time import perf_counter
 
-import matplotlib.pyplot as plt
 import segmentation_models_pytorch as smp
 import torch
 import torch.optim as optim
 from clearml import Dataset, Task
-from segmentation_models_pytorch.losses import DiceLoss, FocalLoss, JaccardLoss
+from segmentation_models_pytorch.losses import DiceLoss, JaccardLoss
 from torch.utils.data import DataLoader
 from torch.utils.tensorboard import SummaryWriter
 from torchgeo.datasets import RasterDataset, stack_samples
-from torchgeo.samplers import GridGeoSampler, RandomGeoSampler, Units
+from torchgeo.samplers import RandomGeoSampler, Units
 from torchgeo.transforms import indices
 from torchvision.models.segmentation import deeplabv3_resnet50
 
 # For ClearML
-task = Task.init(project_name="CV_MLOps_ITMO_2023", task_name="test2_train_torchgeo")
+task = Task.init(project_name="CV_MLOps_ITMO_2023",
+                 task_name="test2_train_torchgeo")
 dataset_name = "for_tocrhgeo"
 dataset_project = "CV_MLOps_ITMO_2023"
 dataset_path = Dataset.get(
@@ -31,7 +30,6 @@ parser.add_argument("--val_samp_len", type=int, default=320)
 parser.add_argument("--batch_size", type=int, default=8)
 parser.add_argument('--loss_fns', type=str,
                     choices=['DiceLoss',
-                             'FocalLoss',
                              'JaccardLoss'],
                     default='DiceLoss')
 parser.add_argument("--iou_thr", type=float, default=0.5)
@@ -56,8 +54,6 @@ gc.collect()
 torch.cuda.empty_cache()
 
 tb_writer = SummaryWriter("./tb_logs")
-# root = Path("./data/output/for_torchgeo_way")
-# assert root.exists()
 
 # Check cuda and it is available
 print(f"Cuda is available: {torch.cuda.is_available()}")
@@ -80,17 +76,21 @@ def scale(item: dict):
 
 
 train_imgs = RasterDataset(
-    root=(dataset_path + "/img_new_f/train/"), crs="epsg:32637", res=10, transforms=scale
+    root=(dataset_path + "/img_new_f/train/"),
+    crs="epsg:32637", res=10, transforms=scale
 )
 train_msks = RasterDataset(
-    root=(dataset_path + "/mask_new_f/train/"), crs="epsg:32637", res=10
+    root=(dataset_path + "/mask_new_f/train/"),
+    crs="epsg:32637", res=10
 )
 
 valid_imgs = RasterDataset(
-    root=(dataset_path + "/img_new_f/val/"), crs="epsg:32637", res=10, transforms=scale
+    root=(dataset_path + "/img_new_f/val/"), crs="epsg:32637",
+    res=10, transforms=scale
 )
 valid_msks = RasterDataset(
-    root=(dataset_path + "/mask_new_f/val/"), crs="epsg:32637", res=10
+    root=(dataset_path + "/mask_new_f/val/"),
+    crs="epsg:32637", res=10
 )
 
 train_msks.is_image = False
@@ -112,21 +112,16 @@ valid_sampler = RandomGeoSampler(
     units=Units.PIXELS,
 )
 
-# train_sampler = GridGeoSampler(train_imgs, size=256, stride=250, units=Units.PIXELS)
-# valid_sampler = GridGeoSampler(valid_imgs, size=256, stride=250, units=Units.PIXELS)
-
 train_loader = DataLoader(
     train_dset,
     sampler=train_sampler,
     batch_size=config_dict.get("batch_size", 8),
-    #   batch_size=8,
     collate_fn=stack_samples,
 )
 valid_loader = DataLoader(
     valid_dset,
     sampler=valid_sampler,
     batch_size=config_dict.get("batch_size", 8),
-    #   batch_size=8,
     collate_fn=stack_samples,
 )
 
@@ -140,8 +135,6 @@ print("Define Losses & metrcis ...")
 # Define loss fns and metric
 if config_dict.get("loss_fns") == 'DiceLoss':
     criterion = DiceLoss("multiclass")
-elif config_dict.get("loss_fns") == 'FocalLoss':
-    criterion = FocalLoss('multiclass')
 elif config_dict.get("loss_fns") == 'JaccardLoss':
     criterion = JaccardLoss('multiclass')
 else:
@@ -228,8 +221,10 @@ for epoch in range(config_dict.get("model_epoch", 20)):
     print(f"Epoch {epoch + 1}/{config_dict.get('model_epoch', 20)}")
     print(f"Train Loss: {train_loss:.4f}, Train IoU: {train_iou:.4f}")
     print(f"Val Loss: {val_loss:.4f}, Val IoU: {val_iou:.4f}")
-    tb_writer.add_scalars("Loss", {"train": train_loss, "val": val_loss}, epoch + 1)
-    tb_writer.add_scalars("IoU", {"train": train_iou, "val": val_iou}, epoch + 1)
+    tb_writer.add_scalars("Loss",
+                          {"train": train_loss, "val": val_loss}, epoch + 1)
+    tb_writer.add_scalars("IoU",
+                          {"train": train_iou, "val": val_iou}, epoch + 1)
 
 print("Save model ...")
 torch.save(model.state_dict(), "./test.pt")
