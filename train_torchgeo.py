@@ -17,7 +17,7 @@ from torchgeo.transforms import indices
 from torchvision.models.segmentation import deeplabv3_resnet50
 
 # For ClearML
-task = Task.init(project_name="CV_MLOps_ITMO_2023", task_name="test_train_torchgeo")
+task = Task.init(project_name="CV_MLOps_ITMO_2023", task_name="test2_train_torchgeo")
 dataset_name = "for_tocrhgeo"
 dataset_project = "CV_MLOps_ITMO_2023"
 dataset_path = Dataset.get(
@@ -29,7 +29,11 @@ parser.add_argument("--img_size", type=int, default=256)
 parser.add_argument("--train_samp_len", type=int, default=640)
 parser.add_argument("--val_samp_len", type=int, default=320)
 parser.add_argument("--batch_size", type=int, default=8)
-# parser.add_argument('--loss_fns', type=list, default=[loss1, loss2])
+parser.add_argument('--loss_fns', type=str,
+                    choices=['DiceLoss',
+                             'FocalLoss',
+                             'JaccardLoss'],
+                    default='DiceLoss')
 parser.add_argument("--iou_thr", type=float, default=0.5)
 parser.add_argument("--model_lr", type=float, default=0.0001)
 parser.add_argument("--model_epoch", type=int, default=2)
@@ -41,7 +45,7 @@ config_dict = {
     "train_samp_len": args.train_samp_len,
     "val_samp_len": args.val_samp_len,
     "batch_size": args.batch_size,
-    # 'loss_fns': args.loss_fns,
+    'loss_fns': args.loss_fns,
     "iou_thr": args.iou_thr,
     "model_lr": args.model_lr,
     "model_epoch": args.model_epoch,
@@ -133,10 +137,15 @@ tfms = torch.nn.Sequential(
 
 print("Define Losses & metrcis ...")
 
-# Define loss fns
-criterion = DiceLoss("multiclass")
-# criterion = FocalLoss('multiclass')
-# criterion = JaccardLoss('multiclass')
+# Define loss fns and metric
+if config_dict.get("loss_fns") == 'DiceLoss':
+    criterion = DiceLoss("multiclass")
+elif config_dict.get("loss_fns") == 'FocalLoss':
+    criterion = FocalLoss('multiclass')
+elif config_dict.get("loss_fns") == 'JaccardLoss':
+    criterion = JaccardLoss('multiclass')
+else:
+    print('Wrong Loss Func name, check it')
 
 metric = smp.utils.metrics.IoU(threshold=config_dict.get("iou_thr", 0.5))
 
