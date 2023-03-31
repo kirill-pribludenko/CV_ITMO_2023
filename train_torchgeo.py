@@ -14,6 +14,8 @@ from torchgeo.samplers import RandomGeoSampler, Units
 from torchgeo.transforms import indices
 from torchvision.models.segmentation import deeplabv3_resnet50
 
+from models.lion_pytorch import Lion
+
 # For ClearML
 task = Task.init(project_name="CV_MLOps_ITMO_2023",
                  task_name="test2_train_torchgeo")
@@ -33,6 +35,11 @@ parser.add_argument('--loss_fns', type=str,
                              'JaccardLoss'],
                     default='DiceLoss')
 parser.add_argument("--iou_thr", type=float, default=0.5)
+parser.add_argument("--optimizer", type=str,
+                    choices=['Adam',
+                             'AdamW',
+                             'Lion'],
+                    default='Adam')
 parser.add_argument("--model_lr", type=float, default=0.0001)
 parser.add_argument("--model_epoch", type=int, default=2)
 
@@ -45,6 +52,7 @@ config_dict = {
     "batch_size": args.batch_size,
     'loss_fns': args.loss_fns,
     "iou_thr": args.iou_thr,
+    "optimizer": args.optimizer,
     "model_lr": args.model_lr,
     "model_epoch": args.model_epoch,
 }
@@ -157,7 +165,21 @@ conv = torch.nn.modules.conv.Conv2d(
 )
 backbone.register_module("conv1", conv)
 
-optimizer = optim.Adam(model.parameters(), lr=0.0001, weight_decay=0.01)
+if config_dict.get("optimizer") == 'Adam':
+    optimizer = optim.Adam(model.parameters(),
+                           lr=config_dict.get("model_lr", 0.0001),
+                           weight_decay=0.01)
+elif config_dict.get("optimizer") == 'AdamW':
+    optimizer = optim.AdamW(model.parameters(),
+                            lr=config_dict.get("model_lr", 0.0001),
+                            weight_decay=0.01)
+elif config_dict.get("optimizer") == 'Lion':
+    optimizer = Lion(model.parameters(),
+                     lr=config_dict.get("model_lr", 0.0001),
+                     weight_decay=0.01)
+else:
+    print('Wrong optimizer name, check it')
+
 scheduler = optim.lr_scheduler.StepLR(optimizer, step_size=10, gamma=0.5)
 
 
