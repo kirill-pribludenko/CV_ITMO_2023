@@ -8,14 +8,20 @@ import numpy as np
 import rasterio as rio
 from rasterio import windows
 
-SAT_DIR = """./data/raw/S2A_MSIL2A_20220703T084611_N0400_R107_T37VCD_20220703T134122\
-/S2A_MSIL2A_20220703T084611_N0400_R107_T37VCD_20220703T134122.SAFE\
-/GRANULE/L2A_T37VCD_A036712_20220703T085107/IMG_DATA/R10m/"""
-OUTPUT_IMGS_DIR = "./data/output/for_classic_way/img"
-OUTPUT_MASKS_DIR = "./data/output/for_classic_way/mask_template"
-LIST_OUTPUT_PATH = ["./data/raw/RGB", "./data/raw/RGBN", "./data/raw/mask_template"]
-LIST_OUTPUT_FN = ["/Sentinel_RGB.tif", "/Sentinel_RGBN.tif", "/Sentinel_MASK.tif"]
-IMAGE_SIZE = 512
+from dotenv import load_dotenv
+
+load_dotenv()
+
+SAT_DIR = os.getenv("sat_dir")
+LIST_OUTPUT_PATH = ["./data/interim/classic/RGB",
+                    "./data/interim/torchgeo/img",
+                    "./data/interim/torchgeo/mask_template"]
+LIST_OUTPUT_FN = ["/full_RGB.tif",
+                  "/full_RGBN.tif",
+                  "/Sentinel_MASK.tif"]
+OUTPUT_IMGS_DIR = "./data/interim/classic/img"
+OUTPUT_MASKS_DIR = "./data/interim/classic/mask_template"
+IMAGE_SIZE = int(os.getenv("img_size"))
 
 
 def create_imgs_and_mask(
@@ -120,7 +126,8 @@ def create_imgs_and_mask(
 
     # transform to np.ndarrays
     list_bands_rgb = [band4.read(1), band3.read(1), band2.read(1)]
-    list_bands_rgbn = [band4.read(1), band3.read(1), band2.read(1), band8.read(1)]
+    list_bands_rgbn = [band4.read(1), band3.read(1),
+                       band2.read(1), band8.read(1)]
     mask = mask.read(1)
     mask[:, :] = 0  # black mask
 
@@ -159,7 +166,8 @@ def split_images(
     def get_tiles(big_image, width=img_size, height=img_size):
         ncols, nrows = big_image.meta["width"], big_image.meta["height"]
         offsets = product(range(0, ncols, width), range(0, nrows, height))
-        big_window = windows.Window(col_off=0, row_off=0, width=ncols, height=nrows)
+        big_window = windows.Window(col_off=0, row_off=0,
+                                    width=ncols, height=nrows)
         for col_off, row_off in offsets:
             window = windows.Window(
                 col_off=col_off, row_off=row_off, width=width, height=height
@@ -184,7 +192,8 @@ def split_images(
                 meta["width"], meta["height"] = window.width, window.height
                 outpath = os.path.join(
                     out_path,
-                    output_filename + f"_{int(window.col_off)}_{window.row_off}.tif",
+                    (output_filename +
+                     f"_{int(window.col_off)}_{window.row_off}.tif")
                 )
                 with rio.open(outpath, "w", **meta) as outds:
                     outds.write(big_image.read(window=window))
@@ -198,9 +207,11 @@ def main():
     # create imgs and mask
     create_imgs_and_mask(SAT_DIR, LIST_OUTPUT_PATH, LIST_OUTPUT_FN)
     # split img
-    split_images(LIST_OUTPUT_PATH[0], OUTPUT_IMGS_DIR, "img", img_size=IMAGE_SIZE)
+    split_images(LIST_OUTPUT_PATH[0], OUTPUT_IMGS_DIR,
+                 "img", img_size=IMAGE_SIZE)
     # split mask
-    split_images(LIST_OUTPUT_PATH[2], OUTPUT_MASKS_DIR, "mask", img_size=IMAGE_SIZE)
+    split_images(LIST_OUTPUT_PATH[2], OUTPUT_MASKS_DIR,
+                 "mask", img_size=IMAGE_SIZE)
 
 
 if __name__ == "__main__":

@@ -129,7 +129,23 @@ dmypy.json
 .pyre/
 
 # Own data
-data/raw
-data/output/for_classic_way
-data/output/for_torchgeo_way
 tb_logs
+
+data/raw/S*
+data/interim/classic/img
+data/interim/classic/mask
+data/interim/classic/mask_template
+data/interim/classic/RGB
+data/interim/torchgeo/img
+data/interim/torchgeo/mask
+data/interim/torchgeo/mask_template
+
+data/processed/classic/img
+data/processed/classic/mask
+data/processed/torchgeo/img
+data/processed/torchgeo/mask
+
+data/processed/classic/classic.zip
+data/processed/torchgeo/torchgeo.zip
+
+models/test.pt
