@@ -84,20 +84,20 @@ def scale(item: dict):
 
 
 train_imgs = RasterDataset(
-    root=(dataset_path + "/img_new_f/train/"),
+    root=(dataset_path + "/img_final/train/"),
     crs="epsg:32637", res=10, transforms=scale
 )
 train_msks = RasterDataset(
-    root=(dataset_path + "/mask_new_f/train/"),
+    root=(dataset_path + "/mask_final/train/"),
     crs="epsg:32637", res=10
 )
 
 valid_imgs = RasterDataset(
-    root=(dataset_path + "/img_new_f/val/"), crs="epsg:32637",
+    root=(dataset_path + "/img_final/val/"), crs="epsg:32637",
     res=10, transforms=scale
 )
 valid_msks = RasterDataset(
-    root=(dataset_path + "/mask_new_f/val/"),
+    root=(dataset_path + "/mask_final/val/"),
     crs="epsg:32637", res=10
 )
 

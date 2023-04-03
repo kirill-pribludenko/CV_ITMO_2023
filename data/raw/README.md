@@ -1,0 +1,1 @@
+Здесь должны быть сыррые данные, но они много весят. Поэтому ссылка для скачивания - [Google Drive link - raw data](https://drive.google.com/file/d/1cNIqu83s_tfcyiMj0WGQ9XLKQK_HzE76/view?usp=sharing)

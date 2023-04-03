@@ -8,10 +8,10 @@ import numpy as np
 import rasterio as rio
 from rasterio.merge import merge
 
-LABEL_FILE_NAME = "./data/output/annotations.xml"
-INPUT_MASKS_DIR = "./data/output/for_classic_way/mask_template/"
-OUTPUT_PATH = "./data/output/for_classic_way/mask/"
-OUTPUT_FILE = "./data/output/for_torchgeo_way/mask/mask.tif"
+LABEL_FILE_NAME = "./data/interim/annotations.xml"
+INPUT_MASKS_DIR = "./data/interim/classic/mask_template/"
+OUTPUT_PATH = "./data/interim/classic/mask/"
+OUTPUT_FILE = "./data/interim/torchgeo/mask/mask.tif"
 
 
 def rle_decode(input_list: List[int], size_of_mask: List[int]) -> np.ndarray:
@@ -69,7 +69,8 @@ def main():
                 if tag == "polygon":
                     # parse data from polygon
                     text_coords = root[i][j].attrib["points"].replace(";", ",")
-                    array_points = np.array(text_coords.split(",")).astype(float)
+                    array_points = (np.array(text_coords.split(","))
+                                      .astype(float))
                     array_points = array_points.reshape(-1, 2).astype(int)
                     dict_temp[f"polygon_{j}"] = array_points
                 elif tag == "mask":
@@ -85,7 +86,8 @@ def main():
                         int(root[i][j].attrib["height"]),
                         int(root[i][j].attrib["width"]),
                     ]
-                    array_np = np.fromstring(text_coords, dtype=int, sep=",").tolist()
+                    array_np = (np.fromstring(text_coords, dtype=int, sep=",")
+                                  .tolist())
                     decoded_array = rle_decode(array_np, size_of_mask)
                     dict_temp[f"mask_{j}"] = {
                         "array": decoded_array,
@@ -125,7 +127,9 @@ def main():
             for i, key in enumerate(dict_masks[file_name].keys()):
                 if key[:1] == "p":
                     polygon_array = dict_masks[file_name][key]
-                    mask_p = cv2.fillPoly(img_array, pts=[polygon_array], color=(255))
+                    mask_p = cv2.fillPoly(img_array,
+                                          pts=[polygon_array],
+                                          color=(255))
                     final_mask += mask_p
 
                 elif key[:1] == "m":
@@ -156,6 +160,7 @@ def main():
 
     # Merge all mask files to one big mask -----------------------------------
     # This part runnig long time near 10-15 minutes
+    # TODO: optimize merge in future
     print("Start merge....")
     img_paths = glob.glob(os.path.join(OUTPUT_PATH, "*.tif"))
     img_paths.sort()
