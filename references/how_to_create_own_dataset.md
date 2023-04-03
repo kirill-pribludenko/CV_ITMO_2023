@@ -30,4 +30,4 @@ Our example of labeling.
 
 5. That all. Now you can use you own dataset for training, but before you need to split dataset to train & val:
 
-* For **torchgeo** pls see file [torchgeo_split_ds.py](/src/data/torchgeo_split_ds.py) and run it, if you needed.
+* For do this pls see file [split_datasets.py](/src/data/split_datasets.py) and run it, if you needed.
