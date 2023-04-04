@@ -249,7 +249,7 @@ for epoch in range(config_dict.get("model_epoch", 20)):
                           {"train": train_iou, "val": val_iou}, epoch + 1)
 
 print("Save model ...")
-torch.save(model.state_dict(), "./test_torchgeo.pt")
+torch.save(model.state_dict(), "./models/test_torchgeo.pt")
 stop = perf_counter()
 timer = (stop - start) / 60
 print(f"Total time: {timer:.2f} min")

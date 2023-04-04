@@ -148,4 +148,5 @@ data/processed/torchgeo/mask
 data/processed/classic/classic.zip
 data/processed/torchgeo/torchgeo.zip
 
-models/test.pt
+models/test_torchgeo.pt
+models/test_torch.pt
