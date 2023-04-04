@@ -136,13 +136,34 @@ def split_dataset_classic(i_input_dir: str, i_output_dir: List[str],
         shutil.copy(m_src_path, m_dst_path)
 
 
+def delete_images_not_512(folder: str) -> None:
+    """
+    Deletes all images in the given folder if the dimension of
+    the image is not equal to 512 for each side.
+    """
+    for filename in os.listdir(folder):
+        filepath = os.path.join(folder, filename)
+        with rio.open(filepath) as img:
+            # Check if the dimensions of the image are not equal to 512
+            if img.width != 512 or img.height != 512:
+                img.close()
+                os.remove(filepath)
+        img.close()
+
+
 def main():
+    # Spliting datasets
     split_dataset_torchgeo(INPUT_IMG_PATH_G, OUTPUT_IMGS_DIR_G,
                            "img", SCALE)
     split_dataset_torchgeo(INPUT_MASK_PATH_G, OUTPUT_MASKS_DIR_G,
                            "mask", SCALE)
     split_dataset_classic(INPUT_IMG_PATH_C, OUTPUT_IMGS_DIR_C,
                           INPUT_MASK_PATH_C, OUTPUT_MASKS_DIR_C, SCALE)
+
+    # Delete all images which not equal 512
+    folders_for_checking = OUTPUT_IMGS_DIR_C + OUTPUT_MASKS_DIR_C
+    for folder in folders_for_checking:
+        delete_images_not_512(folder)
 
 
 if __name__ == "__main__":

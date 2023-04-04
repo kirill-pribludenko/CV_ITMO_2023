@@ -14,12 +14,12 @@ from torchgeo.samplers import RandomGeoSampler, Units
 from torchgeo.transforms import indices
 from torchvision.models.segmentation import deeplabv3_resnet50
 
-from models.lion_pytorch import Lion
+from lion_pytorch import Lion
 
 # For ClearML
 task = Task.init(project_name="CV_MLOps_ITMO_2023",
                  task_name="test2_train_torchgeo")
-dataset_name = "for_tocrhgeo"
+dataset_name = "tocrhgeo"
 dataset_project = "CV_MLOps_ITMO_2023"
 dataset_path = Dataset.get(
     dataset_name=dataset_name, dataset_project=dataset_project
@@ -249,7 +249,7 @@ for epoch in range(config_dict.get("model_epoch", 20)):
                           {"train": train_iou, "val": val_iou}, epoch + 1)
 
 print("Save model ...")
-torch.save(model.state_dict(), "./test.pt")
+torch.save(model.state_dict(), "./models/test_torchgeo.pt")
 stop = perf_counter()
 timer = (stop - start) / 60
 print(f"Total time: {timer:.2f} min")

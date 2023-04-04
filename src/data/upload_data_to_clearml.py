@@ -25,7 +25,7 @@ dataset_2 = Dataset.create(
 dataset_1.add_files(path=path_to_folder_1_1, dataset_path='img_final')
 dataset_1.add_files(path=path_to_folder_1_2, dataset_path='mask_final')
 dataset_2.add_files(path=path_to_folder_2_1, dataset_path='img_final')
-dataset_2.add_files(path=path_to_folder_2_2, dataset_path='img_final')
+dataset_2.add_files(path=path_to_folder_2_2, dataset_path='mask_final')
 
 # Upload dataset to ClearML server (customizable)
 dataset_1.upload()
