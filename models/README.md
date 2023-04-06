@@ -1,0 +1,1 @@
+Веса моделей можно скачать по ссылке - [Веса](https://disk.yandex.ru/d/26GnD2A1sUOcsA)
