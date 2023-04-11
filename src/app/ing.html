@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="UTF-8">
+	<title>Borschevik Detector</title>
+	<style>
+		body {
+			background-color: black;
+			color: white;
+			font-family: Arial, sans-serif;
+			font-size: 16px;
+			line-height: 1.5;
+			margin: 0;
+			padding: 0;
+		}
+
+		header {
+			display: flex;
+			align-items: center;
+			height: 80px;
+			padding: 0 30px;
+		}
+
+		h1 {
+			font-size: 36px;
+			margin: 0;
+			padding-left: 4cm;
+		}
+
+		img {
+			height: 60px;
+			margin-right: 20px;
+			padding-right: 4cm;
+		}
+
+		main {
+			display: flex;
+			flex-direction: column;
+			align-items: center;
+			padding: 50px;
+		}
+
+		#about {
+			padding: 4cm;
+		}
+
+		.upload-form {
+			margin-top: 50px;
+			display: flex;
+			flex-direction: column;
+			align-items: center;
+		}
+
+		form {
+			display: flex;
+			flex-direction: column;
+			align-items: center;
+			margin-top: 20px;
+		}
+
+		input[type="file"] {
+			margin-bottom: 20px;
+		}
+
+		button[type="submit"] {
+			background-color: #4CAF50;
+			border: none;
+			color: white;
+			padding: 10px 20px;
+			text-align: center;
+			text-decoration: none;
+			display: inline-block;
+			font-size: 16px;
+			margin-top: 20px;
+			cursor: pointer;
+			border-radius: 5px;
+		}
+
+		button[type="submit"]:hover {
+			background-color: #3e8e41;
+		}
+		a {
+ 		 color: white;
+		}
+		a {
+ 		 color: white;
+		}
+	</style>
+</head>
+<body>
+	<header>
+		<h1>Borschevik Detector</h1>
+	</header>
+
+	<main>
+		<div id="about">
+			<h2>Назначение проекта "Borschevik Detector"</h2>
+			<p>Разработка сервиса, использующего машинное обучение для обнаружения растения борщевик на спутниковых снимках. Сервис поможет идентифицировать районы, где присутствует борщевик.</p>
+			<p>Подробнее ознакомиться с проетком вы можете <a href="https://github.com/kirill-pribludenko/CV_ITMO_2023"> тут </a>. </p>
+			<p>Подготовленные картинки должны иметь 4 слой NIR & быть размером 256x256</p>
+		<p>Более подробно можно ознакомится тут   <a href="https://github.com/kirill-pribludenko/CV_ITMO_2023/blob/main/references/how_to_create_own_dataset.md">Как создать свой датасет из космоснимков.</a></p>
+
+		<h2>Загрузите изображение для обработки:</h2>
+		    <form action="/predict" method="post" enctype="multipart/form-data">
+        <input type="file" name="file">
+        <input type="submit" value="Predict">
+     	<a href="/download">Download File</a>
+
+
+
+
+    </form>
+	</main>
+</body>
+</html>
+<script>
+    document.querySelector("#download-btn").addEventListener("click", function() {
+        let file_name = document.querySelector("#file-name").textContent;
+        window.location.href = "/download?file_name=" + file_name;
+    });
+</script>
