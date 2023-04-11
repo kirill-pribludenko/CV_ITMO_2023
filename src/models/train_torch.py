@@ -49,6 +49,7 @@ config_dict = {
     "batch_size": args.batch_size,
     "loss_fns": args.loss_fns,
     "iou_thr": args.iou_thr,
+    "model": args.model,
     "optimizer": args.optimizer,
     "model_lr": args.model_lr,
     "model_epoch": args.model_epoch,
