@@ -1,0 +1,80 @@
+<mxfile host="app.diagrams.net" modified="2023-04-11T14:46:36.225Z" agent="Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/112.0.0.0 Safari/537.36" etag="ocp0VkZwgqRQRlaKXlcR" version="21.1.5" type="device">
+  <diagram name="Страница 1" id="rBT44NU4aesZWBJwgpA3">
+    <mxGraphModel dx="1232" dy="746" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="4tdoIi2SmMLMxq_e9tM8-1" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=1;exitY=0.25;exitDx=0;exitDy=0;entryX=0;entryY=0.25;entryDx=0;entryDy=0;" parent="1" source="4tdoIi2SmMLMxq_e9tM8-2" target="4tdoIi2SmMLMxq_e9tM8-7" edge="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="4tdoIi2SmMLMxq_e9tM8-2" value="&amp;nbsp;User Interface&amp;nbsp;" style="swimlane;whiteSpace=wrap;html=1;" parent="1" vertex="1">
+          <mxGeometry x="40" y="80" width="160" height="200" as="geometry" />
+        </mxCell>
+        <mxCell id="4tdoIi2SmMLMxq_e9tM8-3" value="&amp;nbsp; HTML template" style="rounded=0;whiteSpace=wrap;html=1;" parent="4tdoIi2SmMLMxq_e9tM8-2" vertex="1">
+          <mxGeometry x="20" y="40" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="4tdoIi2SmMLMxq_e9tM8-4" value="the user uploads the image and downloads it" style="rounded=0;whiteSpace=wrap;html=1;" parent="4tdoIi2SmMLMxq_e9tM8-2" vertex="1">
+          <mxGeometry x="20" y="120" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="4tdoIi2SmMLMxq_e9tM8-5" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0;exitY=0.75;exitDx=0;exitDy=0;entryX=1;entryY=0.75;entryDx=0;entryDy=0;" parent="1" source="4tdoIi2SmMLMxq_e9tM8-7" target="4tdoIi2SmMLMxq_e9tM8-2" edge="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="4tdoIi2SmMLMxq_e9tM8-6" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=1;exitY=0.25;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" parent="1" source="4tdoIi2SmMLMxq_e9tM8-7" target="4tdoIi2SmMLMxq_e9tM8-20" edge="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="4tdoIi2SmMLMxq_e9tM8-7" value="Backend" style="swimlane;whiteSpace=wrap;html=1;" parent="1" vertex="1">
+          <mxGeometry x="240" y="80" width="200" height="200" as="geometry" />
+        </mxCell>
+        <mxCell id="4tdoIi2SmMLMxq_e9tM8-8" value="&amp;nbsp; &amp;nbsp;FastAPI app" style="rounded=0;whiteSpace=wrap;html=1;" parent="4tdoIi2SmMLMxq_e9tM8-7" vertex="1">
+          <mxGeometry x="40" y="50" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="4tdoIi2SmMLMxq_e9tM8-9" value="Generates tasks for&lt;br style=&quot;border-color: var(--border-color); text-align: left;&quot;&gt;&lt;span style=&quot;border-color: var(--border-color); text-align: left;&quot;&gt;image&amp;nbsp;segmentation&lt;br&gt;&lt;/span&gt;&lt;span style=&quot;border-color: var(--border-color); text-align: left;&quot;&gt;Reads the results&lt;/span&gt;&lt;br style=&quot;border-color: var(--border-color); text-align: left;&quot;&gt;&lt;span style=&quot;border-color: var(--border-color); text-align: left;&quot;&gt;from the queue&lt;/span&gt;" style="rounded=0;whiteSpace=wrap;html=1;" parent="4tdoIi2SmMLMxq_e9tM8-7" vertex="1">
+          <mxGeometry x="15" y="120" width="170" height="70" as="geometry" />
+        </mxCell>
+        <mxCell id="4tdoIi2SmMLMxq_e9tM8-10" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0;exitY=0.75;exitDx=0;exitDy=0;entryX=1;entryY=0.5;entryDx=0;entryDy=0;" parent="1" source="4tdoIi2SmMLMxq_e9tM8-11" target="4tdoIi2SmMLMxq_e9tM8-22" edge="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="4tdoIi2SmMLMxq_e9tM8-11" value="Model&amp;nbsp;" style="swimlane;whiteSpace=wrap;html=1;" parent="1" vertex="1">
+          <mxGeometry x="640" y="80" width="560" height="200" as="geometry" />
+        </mxCell>
+        <mxCell id="4tdoIi2SmMLMxq_e9tM8-12" value="Product Prediction Service" style="swimlane;fontStyle=0;childLayout=stackLayout;horizontal=1;startSize=30;horizontalStack=0;resizeParent=1;resizeParentMax=0;resizeLast=0;collapsible=1;marginBottom=0;whiteSpace=wrap;html=1;" parent="4tdoIi2SmMLMxq_e9tM8-11" vertex="1">
+          <mxGeometry x="10" y="40" width="150" height="70" as="geometry" />
+        </mxCell>
+        <mxCell id="4tdoIi2SmMLMxq_e9tM8-13" value="Forms tasks for&lt;br&gt;&amp;nbsp;image recognition" style="text;html=1;align=center;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;" parent="4tdoIi2SmMLMxq_e9tM8-12" vertex="1">
+          <mxGeometry y="30" width="150" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="4tdoIi2SmMLMxq_e9tM8-14" value="Product Prediction Service" style="swimlane;fontStyle=0;childLayout=stackLayout;horizontal=1;startSize=30;horizontalStack=0;resizeParent=1;resizeParentMax=0;resizeLast=0;collapsible=1;marginBottom=0;whiteSpace=wrap;html=1;" parent="4tdoIi2SmMLMxq_e9tM8-11" vertex="1">
+          <mxGeometry x="200" y="40" width="165" height="90" as="geometry" />
+        </mxCell>
+        <mxCell id="4tdoIi2SmMLMxq_e9tM8-15" value="&amp;nbsp;finds the coordinates of the &lt;br&gt;hogweed recognition of the &lt;br&gt;heracleum&amp;nbsp;in the image" style="text;html=1;align=center;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;" parent="4tdoIi2SmMLMxq_e9tM8-14" vertex="1">
+          <mxGeometry y="30" width="165" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="4tdoIi2SmMLMxq_e9tM8-16" value="Product Prediction Service" style="swimlane;fontStyle=0;childLayout=stackLayout;horizontal=1;startSize=30;horizontalStack=0;resizeParent=1;resizeParentMax=0;resizeLast=0;collapsible=1;marginBottom=0;whiteSpace=wrap;html=1;" parent="4tdoIi2SmMLMxq_e9tM8-11" vertex="1">
+          <mxGeometry x="400" y="40" width="150" height="70" as="geometry" />
+        </mxCell>
+        <mxCell id="4tdoIi2SmMLMxq_e9tM8-17" value="&lt;div&gt;Reads the results&lt;/div&gt;&lt;div&gt;from the queue&lt;/div&gt;" style="text;html=1;align=center;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;" parent="4tdoIi2SmMLMxq_e9tM8-16" vertex="1">
+          <mxGeometry y="30" width="150" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="4tdoIi2SmMLMxq_e9tM8-18" value="Receives the image received from the user, finds a hogweed there, draws a mask over it, and outputs the finished image in Png format." style="rounded=1;whiteSpace=wrap;html=1;" parent="4tdoIi2SmMLMxq_e9tM8-11" vertex="1">
+          <mxGeometry x="40" y="140" width="450" height="50" as="geometry" />
+        </mxCell>
+        <mxCell id="4tdoIi2SmMLMxq_e9tM8-19" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=1;exitY=0.5;exitDx=0;exitDy=0;" parent="1" source="4tdoIi2SmMLMxq_e9tM8-20" edge="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="640" y="120" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="4tdoIi2SmMLMxq_e9tM8-20" value="&lt;div&gt;Queue of tasks to&lt;/div&gt;&lt;div&gt;complete&lt;/div&gt;" style="rounded=0;whiteSpace=wrap;html=1;" parent="1" vertex="1">
+          <mxGeometry x="480" y="80" width="120" height="80" as="geometry" />
+        </mxCell>
+        <mxCell id="4tdoIi2SmMLMxq_e9tM8-21" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0;exitY=0.5;exitDx=0;exitDy=0;" parent="1" source="4tdoIi2SmMLMxq_e9tM8-22" edge="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="440" y="240" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="4tdoIi2SmMLMxq_e9tM8-22" value="&lt;div&gt;Queue of tasks to&lt;/div&gt;&lt;div&gt;complete&lt;/div&gt;" style="rounded=0;whiteSpace=wrap;html=1;" parent="1" vertex="1">
+          <mxGeometry x="480" y="200" width="120" height="80" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>
