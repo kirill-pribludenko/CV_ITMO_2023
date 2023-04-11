@@ -13,7 +13,7 @@ from lion_pytorch import Lion
 from segmentation_models_pytorch.losses import DiceLoss, JaccardLoss
 from torch.utils.data import DataLoader
 from torch.utils.tensorboard import SummaryWriter
-from torchvision.models.segmentation import deeplabv3_resnet50
+from torchvision.models.segmentation import deeplabv3_resnet50, fcn_resnet50
 
 # For ClearML
 task = Task.init(project_name="CV_MLOps_ITMO_2023",
@@ -31,6 +31,10 @@ parser.add_argument("--loss_fns", type=str,
                              "JaccardLoss"],
                     default="DiceLoss")
 parser.add_argument("--iou_thr", type=float, default=0.5)
+parser.add_argument("--model", type=str,
+                    choices=["DeepLab",
+                             "FCN"],
+                    default="DeepLab")
 parser.add_argument("--optimizer", type=str,
                     choices=["Adam",
                              "AdamW",
@@ -45,6 +49,7 @@ config_dict = {
     "batch_size": args.batch_size,
     "loss_fns": args.loss_fns,
     "iou_thr": args.iou_thr,
+    "model": args.model,
     "optimizer": args.optimizer,
     "model_lr": args.model_lr,
     "model_epoch": args.model_epoch,
@@ -129,7 +134,13 @@ metric = smp.utils.metrics.IoU(threshold=config_dict.get("iou_thr", 0.5))
 print("Define Model ...")
 
 # model, criterion, optimizer and scheduler
-model = deeplabv3_resnet50(weights=None, num_classes=2, aux_loss=None)
+if config_dict.get("model") == "DeepLab":
+    model = deeplabv3_resnet50(weights=None, num_classes=2, aux_loss=None)
+elif config_dict.get("model") == "FCN":
+    model = fcn_resnet50(weights=None, num_classes=2, aux_loss=None)
+else:
+    print("Wrong model name, check it. Must be DeepLab or FCN")
+
 
 if config_dict.get("optimizer") == "Adam":
     optimizer = optim.Adam(model.parameters(),
@@ -144,7 +155,7 @@ elif config_dict.get("optimizer") == "Lion":
                      lr=config_dict.get("model_lr", 0.0001),
                      weight_decay=0.01)
 else:
-    print("Wrong optimizer name, check it")
+    print("Wrong optimizer name, check it. Must be Adam or AdamW or Lion")
 
 scheduler = optim.lr_scheduler.StepLR(optimizer, step_size=10, gamma=0.5)
 
