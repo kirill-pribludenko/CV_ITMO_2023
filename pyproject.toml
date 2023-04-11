@@ -24,6 +24,9 @@ torchvision = {version = "0.14.1", source="torch"}
 tensorboard = "^2.12.0"
 fastapi = "^0.95.0"
 fastapi-responses = "^0.2.1"
+uvicorn = "^0.21.1"
+onnxruntime = "^1.14.1"
+python-multipart = "^0.0.6"
 
 [[tool.poetry.source]]
 name = "torch"
