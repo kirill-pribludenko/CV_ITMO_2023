@@ -1,4 +1,4 @@
-name: Pylint & Black & iSort
+name: Flake8 & Black & iSort
 
 on: [push]
 
@@ -15,9 +15,10 @@ jobs:
     - name: Install dependencies
       run: |
         python -m pip install --upgrade pip
-        pip install pylint black isort
+        pip install flake8 black isort
     - name: Analysing the code with pylint, black & isort
       run: |
-        pylint $(git ls-files '*.py')
-        black $(git ls-files '*.py')
         isort $(git ls-files '*.py')
+        flake8 $(git ls-files '*.py')
+        black $(git ls-files '*.py')
+
