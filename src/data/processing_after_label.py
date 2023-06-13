@@ -134,7 +134,8 @@ def main():
 
                 elif key[:1] == "m":
                     mask_array = dict_masks[file_name][key]["array"]
-                    left_top_point = dict_masks[file_name][key]["left_top_point"]
+                    left_top_point = (dict_masks[file_name][key]
+                                      ["left_top_point"])
                     from_row = left_top_point[0]
                     to_row = left_top_point[0] + mask_array.shape[0]
                     from_col = left_top_point[1]

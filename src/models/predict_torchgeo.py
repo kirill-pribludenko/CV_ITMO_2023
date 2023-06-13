@@ -71,7 +71,8 @@ def detect_heracleum():
     pred = model(imgs_batch)['out']
 
     pred_time = round((time.time() - t0), 3)
-    print(f'Predict Done. Time for {len(files_paths)} predict: {pred_time} sec')
+    print(f'Predict Done.\
+          Time for {len(files_paths)} predict: {pred_time} sec')
 
     normalized_masks = torch.nn.functional.softmax(pred, dim=1)
     class_to_idx = {'no_heracleum': 0, 'heracleum': 1}
